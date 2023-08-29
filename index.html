@@ -11,7 +11,7 @@
         }
         h1 { 
             text-align: center; 
-            font-size: 31px; 
+            font-size: 24px; 
             margin-bottom: 25px; 
             color: #074199; 
             font-weight: bold; 
@@ -90,13 +90,36 @@
             font-size: 18px; 
             font-weight: bold; 
         }
+        .typing-indicator {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #333;
+          animation: typing 1.5s infinite;
+        }
+        .typing-indicator:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        .typing-indicator:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+        @keyframes typing {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
     <div id="chat-container">
-        <h1>aichatbot@ethioco.org 😃</h1>
+        <h1>aichatbot@ethioco.org</h1>
         <div id="chat-history"></div>
-        <div id="typing">Bot is typing...</div>
+        <div id="typing" style="display: none;">
+            <span class="typing-indicator"></span>
+            <span class="typing-indicator"></span>
+            <span class="typing-indicator"></span>
+          </div>
         <input type="text" id="message-input" placeholder="Enter your message">
         <button id="send-button">Send 🚀</button>
         <p id="special-p">Quick answers to common questions:</p>
@@ -128,7 +151,7 @@
             };
             
             const sendMessage = async message => {
-                messageInput.value = message;
+                messageInput.value = ''; 
                 const timestamp = new Date().toLocaleTimeString();
                 let userMessage = document.createElement('div');
                 userMessage.classList.add('message', 'user');
@@ -151,7 +174,6 @@
                     chatHistory.append(botMessage);
                     chatHistory.scrollTop = chatHistory.scrollHeight;
 
-                    messageInput.value = ''; 
                 } catch (error) {
                     console.error('Error:', error);
                 }
