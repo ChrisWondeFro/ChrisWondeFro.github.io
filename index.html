@@ -13,7 +13,7 @@
             text-align: center; 
             font-size: 24px; 
             margin-bottom: 25px; 
-            color: #074199; 
+            color: #020913; 
             font-weight: bold; 
         }
         /* Chat container */
@@ -162,7 +162,7 @@
                 typing.style.display = 'block';
                 
                 try {
-                    const response = await fetch('https://ethioco-chatbot-lp3ivkjumq-uc.a.run.app/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({text: message}) });
+                    const response = await fetch(`https://ethioco-chatbot-test-lp3ivkjumq-uc.a.run.app/chat?input_message=${message}`);
                     const data = await response.json();
                     
                     typing.style.display = 'none';
