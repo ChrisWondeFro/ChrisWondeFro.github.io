@@ -6,34 +6,35 @@
     <style>
         /* General styling */
         body { 
-            background: linear-gradient(to right, #dadddd, #f1eeeb); 
+            background: linear-gradient(to bottom, #669393, #062a44); 
             font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         h1 { 
             text-align: center; 
             font-size: 24px; 
             margin-bottom: 25px; 
-            color: #020913; 
+            color: #d2d9e3; 
             font-weight: bold; 
         }
         /* Chat container */
         #chat-container { 
-            max-width: 800px; 
-            margin: auto; 
+            max-width: 400px;
             border: 1px solid #eaebf2;
-            border-radius: 20px; 
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3); 
-            padding: 20px; 
+            border-radius: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+            padding: 20px;
         }
         /* Chat history */
         #chat-history { 
-            height: 300px; 
-            border: 1px solid #e6e3e3; 
-            padding: 10px; 
-            overflow-y: scroll; 
-            margin-bottom: 10px; 
-            border-radius: 15px; 
-            background-color: #d3cbcb; 
+            height: 300px;
+            padding: 10px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            border-radius: 15px;
+            background-color: #d3cbcb;
         }
         /* Messages */
         .message { 
@@ -43,20 +44,28 @@
             border-radius: 25px; 
             color: white; 
             word-wrap: break-word; 
-            box-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.2);
+            
         }
         .user { 
-            background-color: #643639; 
+            background-color: #363e64; 
             align-self: flex-end; 
             margin-left: auto;
             order: 2; 
         }
         .bot { 
-            background-color: #4f7b97; 
+            background-color: #61696e; 
             align-self: flex-start;
             margin-right: auto; 
             order: 1; 
             color: #fff; 
+        }
+        #common-questions {
+            max-width: 800px;
+            margin-top: 20px;
+            padding: 20px;
+            border: 1px solid #eaebf2;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
         }
         /* Typing indicator */
         #typing { 
@@ -89,6 +98,7 @@
         #special-p {
             font-size: 18px; 
             font-weight: bold; 
+            color: #e8ecef;
         }
         .typing-indicator {
           display: inline-block;
@@ -113,7 +123,7 @@
 </head>
 <body>
     <div id="chat-container">
-        <h1>aichatbot@ethioco.org</h1>
+        <h1>Hello! How can I help you today?</h1>
         <div id="chat-history"></div>
         <div id="typing" style="display: none;">
             <span class="typing-indicator"></span>
@@ -121,12 +131,7 @@
             <span class="typing-indicator"></span>
           </div>
         <input type="text" id="message-input" placeholder="Enter your message">
-        <button id="send-button">Send</button>
-        <p id="special-p">Quick answers to common questions:</p>
-        <button id="events">Annual events? 📅</button>
-        <button id="resources">Legal resources? 📘</button>
-        <button id="vision">Our vision? 📈</button>
-        <button id="donate">Donate? 📝</button>
+        <button id="send-button">Send 🚀</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -141,12 +146,7 @@
                 sendMessage(messageInput.value);
                 }
             });
-            
-            document.getElementById('events').addEventListener('click', () => sendMessage('Are there annual events or celebrations?'));
-            document.getElementById('resources').addEventListener('click', () => sendMessage('Are there any legal and/or family assistance resources?'));
-            document.getElementById('vision').addEventListener('click', () => sendMessage('Whats the vision and mission of the organization for the community?'));
-            document.getElementById('donate').addEventListener('click', () => sendMessage('Why should I donate?'));
-
+           
             const makeLinksClickable = text => {
                 const urlRegex = /(https?:\/\/[^\s]+)/g;
                 return text.replace(urlRegex, url => `<a href="${url}" target="_blank">${url}</a>`);
