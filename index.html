@@ -1,119 +1,167 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <title>AI Consultancy</title>
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      font-family: 'Open Sans', sans-serif;
-      line-height: 1.7;
-      color: #555;
-      background: #f5f5f5;
-    }
-    header {
-      background-color: #007bff;
-      color: white;
-      padding: 20px 0;
-      text-align: center;
-    }
-    nav a {
-      margin: 0 15px;
-      color: white;
-      text-decoration: none;
-    }
-    main {
-      max-width: 1100px;
-      margin: auto;
-      padding: 40px 20px;
-    }
-    article {
-      background: white;
-      margin: 20px 0;
-      padding: 40px;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    }
-    h1, h2 {
-      margin-bottom: 20px;
-      font-weight: 700;
-    }
-    .btn {
-      padding: 12px 25px;
-      background: #007bff;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: background 0.3s ease;
-    }
-    .btn:hover {
-      background: #0056b3;
-    }
-    footer {
-      background: #333;
-      color: white;
-      text-align: center;
-      padding: 20px;
-    }
-  </style>
+    <title>Chatbot</title>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #dadddd;
+        }
+        #chat-container {
+            max-width: 800px;
+            margin: auto;
+        }
+        #chat-history {
+            height: 300px;
+            border: 1px solid #f7f7fa;
+            padding: 10px;
+            overflow-y: scroll;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f1eeeb;
+        }
+        .message {
+            max-width: 80%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            color: white;
+            word-wrap: break-word;
+        }
+        .user {
+            background-color: #4a9540;
+            align-self: flex-end;
+            order: 2;
+        }
+        .bot {
+            background-color:#3689b6;
+            align-self: flex-start;
+            order: 1;
+            color: #f9fbfb;
+        }
+        #typing {
+            display: none;
+        }
+        h1 {
+            text-align: center;
+            font-size: medium;
+            margin-bottom: 25px;
+            color: #074199;
+            font-weight: bold;
+        }
+        .notice {
+            font-weight: bold;
+            margin-top: 35px;
+            margin-bottom: auto;
+            color: #053260;
+            text-align: center;
+        }
+        
+    </style>
 </head>
 <body>
-  <header>
-    <nav>
-      <a href="#consultancy">AI Consultancy</a>
-      <a href="#chatbot">Chatbot Solutions</a>
-      <a href="#portfolio">Project Portfolio</a>
-    </nav>
-  </header>
-  <main>
-    <article id="consultancy">
-      <h1>AI Consultancy</h1>
-      <p>We provide top-notch AI consultancy services.</p>
-      <p>
-        Custom AI chatbot services pricing
-        
-        Base traffic =( up to 10,000 users sending a message to your website’s chatbot at the same time)
-        Speed will be improved over time.
-        
-        Monthly subscription
-        
-        -Always available online 
-        1.Full and direct message support for 30 days/
-        2.Pay a base monthly fee(45$) that can increase to a limited amount(149$) to handle medium traffic past which the service may slow down.
-        
-        Purchase service/ advanced package/ for a year
-        
-        -Always available online 
-        1. Full and direct message support / caching/ conversation history access/ improve answers over time/ live update data once a day/custom model training.
-        2. Purchase the service for a year at base price(2499$)
-        3. Pricing can be negotiated down
-        
-        On call custom solution to handle very high traffic(10,000 +) only
-        
-        1.Full dedicated support
-        2.Pay per hour rate which will be based on total usage( up to 14.99$ per hour) and service fee(49.99$ per hour)
-        
-        *subject to negotiation terms and conditions as arising from the negotiation itself.
-        
-        </p>
-      <button class="btn">Contact Us</button>
-    </article>
-    <article id="chatbot">
-      <h2>Chatbot Solutions</h2>
-      <p>At AI Consultancy, we specialize in a multi-tiered approach to chatbot solutions.</p>
-    </article>
-    <article id="portfolio">
-      <h2>Project Portfolio</h2>
-      <p>Check out some of our previous work.</p>
-    </article>
-  </main>
-  <footer>
-    <p>&copy; 2023 AI Consultancy. All Rights Reserved.</p>
-  </footer>
+    <div class="container py-5" id="chat-container">
+        <h1>aichatbot@hopecommunities.org</h1>
+        <div id="chat-history" class="mb-3 d-flex flex-column"></div>
+        <div id="typing" class="text-muted">Bot is typing...</div>
+        <div class="input-group">
+            <input type="text" id="message-input" class="form-control" placeholder="Enter a message">
+            <div class="input-group-append">
+                <button id="send-button" class="btn btn-primary">Send</button>
+            </div>
+        </div>
+        <p class="notice">Or, try one of these common questions:</p>
+        <div class="btn-group mb-3" role="group" aria-label="Prepared messages"></div>
+        <button type="button" class="btn btn-secondary mb-2 w-100" id="events">How is Hope funded?</button>
+        <button type="button" class="btn btn-secondary mb-2 w-100 " id="resources">What kinds of programs and services does Hope offer to residents?</button>
+        <button type="button" class="btn btn-secondary w-100" id="about-us">What is Hope Communities doing to address Affordable Housing issues in Denver?</button>
+        </div> 
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        function linkify(inputText) {
+            let replacedText, replacePattern1, replacePattern2, replacePattern3;
+
+            replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
+            replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">click here</a>');
+
+            replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
+            replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">click here</a>');
+
+            replacePattern3 = /(([a-zA-Z0-9\-_.])+@[a-zA-Z_]+?(\.[a-zA-Z]{2,6})+)/gim;
+            replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
+
+            return replacedText;
+        }
+
+        $(document).ready(function() {
+            const chatHistory = $('#chat-history');
+            const messageInput = $('#message-input');
+            const sendButton = $('#send-button');
+            const typing = $('#typing');
+
+             // Add a click event for each button
+
+            $('#events').click(function() {
+                sendMessage('How is Hope funded?');
+            });
+
+            $('#resources').click(function() {
+                sendMessage('What kinds of programs and services does Hope offer to residents?');
+            });
+
+            $('#about-us').click(function() {
+                sendMessage('What is Hope Communities doing to address Affordable Housing issues in Denver?');
+            });
+
+            function sendMessage(message) {
+                messageInput.val(message);
+                sendButton.click();
+            }
+
+            sendButton.click(() => {
+                const message = messageInput.val();
+                messageInput.val('');
+                const timestamp = new Date().toLocaleTimeString();
+
+                // Append the user's message to the chat history as it's sent
+                let userMessage = document.createElement('div');
+                userMessage.classList.add('message', 'user');
+                userMessage.innerHTML = `You (${timestamp}): ${message}`;
+                chatHistory.append(userMessage);
+
+                typing.show();
+
+                fetch('http://localhost:8000/chat', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({text: message}),
+                })
+                .then(response => response.json())
+                .then(data => {
+                    typing.hide();
+                    const botMessage = document.createElement('div');
+                    botMessage.classList.add('message', 'bot');
+                    botMessage.innerHTML = linkify (`ChatBot (${timestamp}): ${data.response.output}`);
+
+                    // Create a message pair wrapper and append the user and bot messages to it
+                    let messagePair = document.createElement('div');
+                    messagePair.classList.add('message-pair');
+                    messagePair.appendChild(userMessage);
+                    messagePair.appendChild(botMessage);
+ 
+                    // Append the message pair to the chat history
+                    chatHistory.append(messagePair);
+                    chatHistory.scrollTop(chatHistory[0].scrollHeight);
+                })
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            });
+        });
+    </script>
 </body>
 </html>
