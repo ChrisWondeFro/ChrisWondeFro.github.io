@@ -2,165 +2,221 @@
 <html>
 <head>
     <title>Chatbot</title>
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        body {
-            background-color: #dadddd;
+        /* General styling */
+        body { 
+            background: linear-gradient(to bottom, #157070, #0a3553); 
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        #chat-container {
-            max-width: 800px;
-            margin: auto;
+        h1 { 
+            text-align: center; 
+            font-size: 24px; 
+            margin-bottom: 25px; 
+            margin-top: 12px;
+            color: #a79442;  
+            font-weight: bold; 
         }
-        #chat-history {
+        h2 { 
+            text-align: center; 
+            font-size: 24px; 
+            margin-bottom: 45px; 
+            margin-top: 10px;
+            color: #13217c; 
+            font-weight: bold; 
+        } 
+        h3 { 
+            text-align: center; 
+            font-size: 24px; 
+            margin-bottom: 15px; 
+            margin-top: 10;
+            color: #e1ded3; 
+            font-weight: bold; 
+        } 
+
+        /* Chat container */
+        #chat-container { 
+            max-width: 100%;
+            border: 6px solid #8da1c1;
+            border-radius: 59px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+            padding: 40px; left: auto;
+        }
+        /* Chat history */
+        #chat-history { 
             height: 300px;
-            border: 1px solid #f7f7fa;
-            padding: 10px;
+            max-width: 600;
+            padding: 50px;
             overflow-y: scroll;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            background-color: #f1eeeb;
+            margin-bottom: 15px;
+            border-radius: 36px;
+            background-color: #d3d0cb;
         }
-        .message {
-            max-width: 80%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 10px;
-            color: white;
-            word-wrap: break-word;
+        /* Messages */
+        .message { 
+            max-width: 100%; 
+            padding: 15px; 
+            margin-bottom: 10px; 
+            border-radius: 25px; 
+            color: white; 
+            word-wrap: break-word; 
+            
         }
-        .user {
-            background-color: #4a9540;
-            align-self: flex-end;
-            order: 2;
+        .user { 
+            background-color: #704b0a; 
+            align-self: flex-end; 
+            margin-left: auto;
+            order: 2; 
         }
-        .bot {
-            background-color:#3689b6;
+        .bot { 
+            background-color: #165780; 
             align-self: flex-start;
-            order: 1;
-            color: #f9fbfb;
+            margin-right: auto; 
+            order: 1; 
+            color: #fff; 
         }
-        #typing {
-            display: none;
+        #common-questions {
+            max-width: 800px;
+            margin-top: 20px;
+            padding: 20px;
+            border: 6px solid #8badd6;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.3);
+
         }
-        h1 {
-            text-align: center;
-            font-size: medium;
-            margin-bottom: 25px;
-            color: #074199;
-            font-weight: bold;
+        /* Typing indicator */
+        #typing { 
+            display: none; 
         }
-        .notice {
-            font-weight: bold;
-            margin-top: 35px;
-            margin-bottom: auto;
-            color: #053260;
-            text-align: center;
+        /* Buttons */
+        button { 
+            background-color: #074199; 
+            color: white; 
+            padding: 9px 22px; 
+            margin: 5px; 
+            border: none; 
+            border-radius: 50px; 
+            cursor: pointer; 
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            font-size: 16px;
         }
-        
+        button:hover { 
+            background-color: #052e6a;
+            transform: scale(1.05);
+        }
+        input[type="text"] { 
+            padding: 15px; 
+            width: 95%; 
+            margin-bottom: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 25px; 
+            font-size: 18px;
+        }
+        #special-p {
+            font-size: 18px; 
+            font-weight: bold; 
+            color: #e8ecef;
+        }
+        .typing-indicator {
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: #333;
+          animation: typing 1.5s infinite;
+        }
+        .typing-indicator:nth-child(2) {
+          animation-delay: 0.2s;
+        }
+        .typing-indicator:nth-child(3) {
+          animation-delay: 0.4s;
+        }
+        @keyframes typing {
+          0% { transform: translateY(0); }
+          50% { transform: translateY(-10px); }
+          100% { transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
-    <div class="container py-5" id="chat-container">
-        <h1>aichatbot@hopecommunities.org</h1>
-        <div id="chat-history" class="mb-3 d-flex flex-column"></div>
-        <div id="typing" class="text-muted">Bot is typing...</div>
-        <div class="input-group">
-            <input type="text" id="message-input" class="form-control" placeholder="Enter a message">
-            <div class="input-group-append">
-                <button id="send-button" class="btn btn-primary">Send</button>
-            </div>
-        </div>
-        <p class="notice">Or, try one of these common questions:</p>
-        <div class="btn-group mb-3" role="group" aria-label="Prepared messages"></div>
-        <button type="button" class="btn btn-secondary mb-2 w-100" id="events">How is Hope funded?</button>
-        <button type="button" class="btn btn-secondary mb-2 w-100 " id="resources">What kinds of programs and services does Hope offer to residents?</button>
-        <button type="button" class="btn btn-secondary w-100" id="about-us">What is Hope Communities doing to address Affordable Housing issues in Denver?</button>
-        </div> 
+    <div id="chat-container">
+        <h1>customAIchatbots@devlookforward</h1>
+        <h2>chatbot@hopecommunities.org</h2>
+        <h3>Hi! How can I help you today?</h3>
+        <div id="chat-history"></div>
+        <div id="typing" style="display: none;">
+            <span class="typing-indicator"></span>
+            <span class="typing-indicator"></span>
+            <span class="typing-indicator"></span>
+          </div>
+        <input type="text" id="message-input" placeholder="Enter your message">
+        <button id="send-button">Send</button>
     </div>
-
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <div id="common-questions">
+        <p id="special-p">Quick answers to questions about our website:</p>
+        <button id="events">What kinds of programs and services does Hope offer to residents? 📅</button>
+        <button id="resources"> What is Hope Communities doing to address Affordable Housing issues in Denver? 📘</button>
+        <button id="about-us">How is affordable housing different from subsidized housing? What about public housing? 🔍</button>
+        <button id="vision">How does Hope determine an individual or family’s rental payment? 📈</button>
+        
+    </div>
     <script>
-        function linkify(inputText) {
-            let replacedText, replacePattern1, replacePattern2, replacePattern3;
+        document.addEventListener('DOMContentLoaded', () => {
+            const chatHistory = document.getElementById('chat-history');
+            const messageInput = document.getElementById('message-input');
+            const sendButton = document.getElementById('send-button');
+            const typing = document.getElementById('typing');
 
-            replacePattern1 = /(\b(https?|ftp):\/\/[-A-Z0-9+&@#\/%?=~_|!:,.;]*[-A-Z0-9+&@#\/%=~_|])/gim;
-            replacedText = inputText.replace(replacePattern1, '<a href="$1" target="_blank">click here</a>');
-
-            replacePattern2 = /(^|[^\/])(www\.[\S]+(\b|$))/gim;
-            replacedText = replacedText.replace(replacePattern2, '$1<a href="http://$2" target="_blank">click here</a>');
-
-            replacePattern3 = /(([a-zA-Z0-9\-_.])+@[a-zA-Z_]+?(\.[a-zA-Z]{2,6})+)/gim;
-            replacedText = replacedText.replace(replacePattern3, '<a href="mailto:$1">$1</a>');
-
-            return replacedText;
-        }
-
-        $(document).ready(function() {
-            const chatHistory = $('#chat-history');
-            const messageInput = $('#message-input');
-            const sendButton = $('#send-button');
-            const typing = $('#typing');
-
-             // Add a click event for each button
-
-            $('#events').click(function() {
-                sendMessage('How is Hope funded?');
+            messageInput.addEventListener('keydown', function(event) {
+                if (event.key === 'Enter') {
+                event.preventDefault();
+                sendMessage(messageInput.value);
+                }
             });
-
-            $('#resources').click(function() {
-                sendMessage('What kinds of programs and services does Hope offer to residents?');
-            });
-
-            $('#about-us').click(function() {
-                sendMessage('What is Hope Communities doing to address Affordable Housing issues in Denver?');
-            });
-
-            function sendMessage(message) {
-                messageInput.val(message);
-                sendButton.click();
-            }
-
-            sendButton.click(() => {
-                const message = messageInput.val();
-                messageInput.val('');
+            
+            document.getElementById('events').addEventListener('click', () => sendMessage('What kinds of programs and services does Hope offer to residents?'));
+            document.getElementById('resources').addEventListener('click', () => sendMessage('What is Hope Communities doing to address Affordable Housing issues in Denver?'));
+            document.getElementById('about-us').addEventListener('click', () => sendMessage('How is affordable housing different from subsidized housing? What about public housing?'));
+            document.getElementById('vision').addEventListener('click', () => sendMessage('How does Hope determine an individual or family’s rental payment?'));
+            
+            const makeLinksClickable = text => {
+                const urlRegex = /(https?:\/\/[^\s]+)/g;
+                return text.replace(urlRegex, url => `<a href="${url}" target="_blank">${url}</a>`);
+            };
+            
+            const sendMessage = async message => {
+                messageInput.value = ''; 
                 const timestamp = new Date().toLocaleTimeString();
-
-                // Append the user's message to the chat history as it's sent
                 let userMessage = document.createElement('div');
                 userMessage.classList.add('message', 'user');
-                userMessage.innerHTML = `You (${timestamp}): ${message}`;
+                userMessage.innerHTML = `You (${timestamp}): ${makeLinksClickable(message)}`;
+
                 chatHistory.append(userMessage);
-
-                typing.show();
-
-                fetch('http://localhost:8000/chat', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({text: message}),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    typing.hide();
+                
+                typing.style.display = 'block';
+                
+                try {
+                    const response = await fetch(`https://hopecommunity-chatbot-test-lp3ivkjumq-uc.a.run.app/chat?input_message=${message}`);
+                    const data = await response.json();
+                    
+                    typing.style.display = 'none';
+                    
                     const botMessage = document.createElement('div');
                     botMessage.classList.add('message', 'bot');
-                    botMessage.innerHTML = linkify (`ChatBot (${timestamp}): ${data.response.output}`);
+                    botMessage.innerHTML = `ChatBot (${timestamp}): ${makeLinksClickable(data.response.output)}`;
 
-                    // Create a message pair wrapper and append the user and bot messages to it
-                    let messagePair = document.createElement('div');
-                    messagePair.classList.add('message-pair');
-                    messagePair.appendChild(userMessage);
-                    messagePair.appendChild(botMessage);
- 
-                    // Append the message pair to the chat history
-                    chatHistory.append(messagePair);
-                    chatHistory.scrollTop(chatHistory[0].scrollHeight);
-                })
-                .catch((error) => {
+                    chatHistory.append(botMessage);
+                    chatHistory.scrollTop = chatHistory.scrollHeight;
+
+                } catch (error) {
                     console.error('Error:', error);
-                });
-            });
+                }
+            };
+
+            sendButton.addEventListener('click', () => sendMessage(messageInput.value));
         });
     </script>
 </body>
