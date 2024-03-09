@@ -1,0 +1,9 @@
+*.png
+/static
+index_chat.html
+index_real.html
+portfolio.html
+*tailwind.min.css
+*.ico
+tailwind.config.js
+tailwindcss
